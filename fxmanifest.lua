@@ -1,15 +1,14 @@
 fx_version "cerulean"
 
-description "Basic React (TypeScript) & Lua Game Scripts Boilerplate"
-author "Project Error"
-version '1.0.0'
-repository 'https://github.com/project-error/fivem-react-boilerplate-lua'
+description "Basic Hacking device minigame"
+author "egertaia"
+version '0.0.1'
+repository 'https://github.com/egertaia/bls-hackingdevices'
 
 lua54 'yes'
 
 games {
   "gta5",
-  "rdr3"
 }
 
 ui_page 'web/build/index.html'

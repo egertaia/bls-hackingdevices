@@ -3,14 +3,14 @@ local function toggleNuiFrame(shouldShow)
   SendReactMessage('setVisible', shouldShow)
 end
 
-RegisterCommand('show-nui', function()
+RegisterCommand('bls-hackingdevices:open-frame', function()
   toggleNuiFrame(true)
   debugPrint('Show NUI frame')
 end)
 
-RegisterNUICallback('hideFrame', function(_, cb)
+RegisterNUICallback('bls-hackingdevices:close-frame', function(_, cb)
   toggleNuiFrame(false)
-  debugPrint('Hide NUI frame')
+  debugPrint('Hide bls-hackingdevices frame')
   cb({})
 end)
 
