@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css'
-import {useNuiEvent} from "../hooks/useNuiEvent";
-import {debugData} from "../utils/debugData";
-import {fetchNui} from "../utils/fetchNui";
-import {useExitListener} from "../hooks/useExitListener";
+import { useNuiEvent } from "../hooks/useNuiEvent";
+import { debugData } from "../utils/debugData";
+import { fetchNui } from "../utils/fetchNui";
+import { useExitListener } from "../hooks/useExitListener";
 
 // This will set the NUI to visible if we are
 // developing in browser
@@ -18,7 +18,7 @@ interface ReturnClientDataCompProps {
   data: any
 }
 
-const ReturnClientDataComp: React.FC<ReturnClientDataCompProps> = ({data}) => (
+const ReturnClientDataComp: React.FC<ReturnClientDataCompProps> = ({ data }) => (
   <>
     <h5>Returned Data:</h5>
     <pre>
@@ -54,7 +54,7 @@ const App: React.FC = () => {
       setClientData(retData)
     }).catch(e => {
       console.error('Setting mock data due to error', e)
-      setClientData({ x: 500, y: 300, z: 200})
+      setClientData({ x: 500, y: 300, z: 200 })
     })
   }
 
