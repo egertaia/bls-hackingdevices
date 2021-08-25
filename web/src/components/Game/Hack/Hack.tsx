@@ -3,11 +3,12 @@ import { HackType } from '../../../typings/hackType';
 import './Hack.css';
 
 type HackProps = {
-    type?: HackType
+    hackType: HackType,
+    duration: number
 }
 
 
-const Hack: React.FC<HackProps> = ({ type = HackType.ALPHANUMERIC }) => {
+const Hack: React.FC<HackProps> = ({ hackType, duration }) => {
     return (
         <div className='hack'>
             <div className='find'></div>
