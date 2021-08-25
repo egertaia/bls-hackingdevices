@@ -1,0 +1,4 @@
+export enum SplashText {
+    CONNECTING = 'ÜHENDUN SÜSTEEMIGA',
+    PREPARING = 'VALMISTAN SÜSTEEMI ETTE',
+}

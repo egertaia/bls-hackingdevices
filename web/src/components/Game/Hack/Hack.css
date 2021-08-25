@@ -1,0 +1,49 @@
+.hack .find {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    user-select: none;
+    margin-top: 10px;
+}
+
+.hack .find>div {
+    display: inline-block;
+}
+
+.hack .timer {
+    text-align: center;
+    color: green;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.hack .codes {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    margin: auto;
+}
+
+.hack .codes>div {
+    flex: 1 0 10%;
+    margin: 7px 0;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.hack .codes>div.red {
+    color: red;
+}
+
+.hack .codes>div.green {
+    color: green;
+}
+
+.hack .mirrored .find>div,
+.hack .mirrored .codes>div {
+    -moz-transform: scale(-1, -1);
+    -o-transform: scale(-1, -1);
+    -webkit-transform: scale(-1, -1);
+    transform: scale(-1, -1);
+}
