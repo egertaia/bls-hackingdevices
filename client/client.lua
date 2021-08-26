@@ -1,10 +1,11 @@
 hackingCallback = {}
 
-local function toggleNuiFrame(shouldShow, hackType, duration)
+local function toggleNuiFrame(shouldShow, hackType, gameType, duration)
   SetNuiFocus(shouldShow, shouldShow)
   message = {}
   message.show = shouldShow
   message.hackType = hackType
+  message.gameType = gameType
   message.duration = duration
   SendReactMessage('setVisible', message)
 end
@@ -18,11 +19,16 @@ end
 -- BRAILLE = 'braille',
 -- RUNES = 'runes',
 
+-- GAMETYPE
+-- RANDOM = 'random',
+-- NORMAL = 'normal',
+-- MIRRORED = 'mirrored'
 
-RegisterNetEvent('bls-hackingdevices:start-hacking', function(hackType, duration, callback)
+
+RegisterNetEvent('bls-hackingdevices:start-hacking', function(hackType, gameType, duration, callback)
   hackingCallback = callback;
-  toggleNuiFrame(true, hackType, duration)
-  debugPrint('Show NUI frame', hackType, duration)
+  toggleNuiFrame(true, hackType, gameType, duration)
+  debugPrint('Show NUI frame', hackType, gameType, duration)
 end)
 
 

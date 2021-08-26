@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { SplashText } from '../../typings/splashText';
+import { SplashText, HackType, GameType } from '../../typings/gameOptions';
 import Splash from './Splash/Splash';
 import './Game.css';
 import Hack from './Hack/Hack';
-import { HackType } from '../../typings/hackType';
 
 // https://sharkiller.ddns.net/nopixel_minigame/hackingdevice/minigame.js?v=20210808
 
 type GameProps = {
     hackType: HackType,
+    gameType: GameType,
     duration: number
 }
 
-const Game: React.FC<GameProps> = ({ hackType, duration }) => {
+const Game: React.FC<GameProps> = ({ hackType, gameType, duration }) => {
     const [splashText, setSplashText] = useState(SplashText.PREPARING);
     const [gameStarted, setGameStarted] = useState(false);
 
     useEffect(() => {
         if (!gameStarted) {
-
-            console.log('h');
+            console.log('gs');
             setTimeout(() => {
+                console.log('startt');
                 setGameStarted(true);
                 setSplashText(SplashText.CONNECTING);
             }, 1500);
@@ -31,7 +31,7 @@ const Game: React.FC<GameProps> = ({ hackType, duration }) => {
         <div className='minigame'>
             <Splash text={splashText}></Splash>
             {gameStarted && (
-                <Hack hackType={hackType} duration={duration} />
+                <Hack hackType={hackType} gameType={gameType} duration={duration} />
             )}
         </div>
     );
