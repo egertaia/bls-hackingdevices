@@ -7,7 +7,7 @@ local function toggleNuiFrame(shouldShow, hackType, gameType, duration)
   message.hackType = hackType
   message.gameType = gameType
   message.duration = duration
-  SendReactMessage('setVisible', message)
+  SendReactMessage("setVisible", message)
 end
 
 
@@ -25,17 +25,30 @@ end
 -- MIRRORED = 'mirrored'
 
 
-RegisterNetEvent('bls-hackingdevices:start-hacking', function(hackType, gameType, duration, callback)
+
+RegisterNetEvent("bls-hackingdevices:start-hacking", function(hackType, gameType, duration, callback)
   hackingCallback = callback;
   toggleNuiFrame(true, hackType, gameType, duration)
-  debugPrint('Show NUI frame', hackType, gameType, duration)
+  debugPrint("Show NUI frame", hackType, gameType, duration)
 end)
 
 
 -- returns a boolean, whether hack was successful or not
-RegisterNUICallback('close-frame', function(data, cb)
+RegisterNUICallback("close-frame", function(data, cb)
   toggleNuiFrame(false)
-  debugPrint('Hide bls-hackingdevices frame', data)
+  debugPrint("Hide bls-hackingdevices frame", data)
   hackingCallback(data)
   cb({})
+end)
+
+
+--testing func
+
+local function testCallback(data)
+  print("hehee")
+  print(data)
+end
+
+RegisterCommand("testHack", function (source, args)
+  TriggerEvent("bls-hackingdevices:start-hacking", args[0], args[1], args[2], testCallback)
 end)
