@@ -4,7 +4,7 @@ import { noop } from "../../../utils/misc";
 type PositionSetter = (position: number) => void;
 type ValueChecker = () => void;
 
-const LISTENED_KEYS = ["KeyW", "KeyS", "KeyA", "KeyD", "Enter"];
+const LISTENED_KEYS = ["KeyW", "ArrowUp", "KeyS", "ArrowDown", "KeyA", "ArrowLeft", "KeyD", "ArrowRight", "Enter"];
 
 // Basic hook to listen for key presses in NUI in order to exit
 export const useHackMoveListener = (position: number, positionSetter: PositionSetter, valueChecker: ValueChecker) => {
@@ -26,26 +26,29 @@ export const useHackMoveListener = (position: number, positionSetter: PositionSe
 
     useEffect(() => {
         const keyHandler = (e: KeyboardEvent) => {
-            console.log(e);
             if (LISTENED_KEYS.includes(e.code)) {
                 switch (e.code) {
                     case "KeyW":
+                    case "ArrowUp":
                         positionRef.current -= 10;
                         if (positionRef.current < 0) positionRef.current += 80;
                         setterRef.current(positionRef.current);
                         break;
 
                     case "KeyS":
+                    case "ArrowDown":
                         positionRef.current += 10;
                         positionRef.current %= 80;
                         setterRef.current(positionRef.current);
                         break;
                     case "KeyA":
+                    case "ArrowLeft":
                         positionRef.current--;
                         if (positionRef.current < 0) positionRef.current = 79;
                         setterRef.current(positionRef.current);
                         break;
                     case "KeyD":
+                    case "ArrowRight":
                         positionRef.current++;
                         positionRef.current %= 80;
                         setterRef.current(positionRef.current);

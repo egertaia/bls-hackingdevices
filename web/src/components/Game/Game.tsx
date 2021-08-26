@@ -18,9 +18,7 @@ const Game: React.FC<GameProps> = ({ hackType, gameType, duration }) => {
 
     useEffect(() => {
         if (!gameStarted) {
-            console.log('gs');
             setTimeout(() => {
-                console.log('startt');
                 setGameStarted(true);
                 setSplashText(SplashText.CONNECTING);
             }, 1500);

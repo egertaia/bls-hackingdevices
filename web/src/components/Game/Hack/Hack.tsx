@@ -4,6 +4,7 @@ import { GameType, HackType } from '../../../typings/gameOptions';
 import './Hack.css';
 import { getRandomSetChar, randomNumber, sleep } from '../../../utils/random';
 import { useHackMoveListener } from './useHackMoveListener';
+import { fetchNui } from '../../../utils/fetchNui';
 
 type HackProps = {
     hackType: HackType,
@@ -12,9 +13,9 @@ type HackProps = {
 }
 
 const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
-    let timerStart: Date;
+    const timerStart = useRef<Date>(new Date());
     const timerGame: any = useRef();
-    let timerTime: any;
+    const timerTime = useRef<any>();
     const timerFinish: any = useRef();
     const [correctPosition] = useState<number>(randomNumber(0, 80));
     const codes = useRef<any[]>([]);
@@ -36,23 +37,20 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
 
 
     const moveCodes = useCallback(() => {
-        console.log('still');
         let codesPos = (codesPosition.current + 1) % 80;
-        console.log('codesPOS', codesPos);
         codesPosition.current = codesPos;
 
         let temporaryCodes = [...codes.current];
         temporaryCodes.push(temporaryCodes.shift());
         codes.current = temporaryCodes;
 
-        console.log(codesPosition, 'cp', correctPosition, currentPosition);
-    }, [codesPosition, correctPosition, currentPosition]);
+    }, [codesPosition]);
 
     const timer = () => {
         let msString;
         let timerNow = new Date();
         let timerDiff = new Date();
-        timerDiff.setTime(timerNow.getTime() - timerStart.getTime());
+        timerDiff.setTime(timerNow.getTime() - timerStart.current.getTime());
         let ms = (999 - timerDiff.getMilliseconds());
         let sec = timerDiff.getSeconds();
         if (ms > 99) msString = Math.floor(ms / 10);
@@ -62,41 +60,26 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
     }
 
     const check = () => {
-        stopTimer();
+        clearInterval(timerTime.current);
 
         let currentAttempt = (currentPosition.current + codesPosition.current);
         currentAttempt %= 80;
 
-        console.log(currentAttempt, correctPosition, 'cc');
-
-        if (currentAttempt === correctPosition) {
-            console.log('you win');
-        } else {
-            console.log('aeg läbi, kaotus');
-        }
-
         setShowCorrect(true);
+
+        setTimeout(() => {
+            if (currentAttempt === correctPosition) {
+                fetchNui('close-frame', true);
+            } else {
+                fetchNui('close-frame', false);
+            }
+        }, 1500);
 
         resetGame();
     }
 
-    const startTimer = () => {
-        timerStart = new Date();
-        timerTime = setInterval(timer, 1);
-    }
-
-    const resetTimer = () => {
-        clearInterval(timerTime);
-        setTimerValue('0.000');
-    }
-
-    const stopTimer = () => {
-        clearInterval(timerTime);
-    }
-
-
     const resetGame = () => {
-        resetTimer();
+        clearInterval(timerTime.current);
         clearTimeout(timerGame.current);
         clearTimeout(timerFinish.current);
     }
@@ -116,15 +99,32 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
 
 
     useEffect(() => {
-        console.log('hi');
         generateCodes();
+        currentPosition.current = 43;
+        codesPosition.current = 0;
+        setShowCorrect(false);
+
+        timerStart.current = new Date();
+        timerTime.current = setInterval(timer, 1);
         timerGame.current = setInterval(moveCodes, 1500);
-        startTimer();
         timerFinish.current = sleep(duration * 1000, () => {
             check();
         });
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const checkTrail = (position: number, trailPosition: number) => {
+        if (trailPosition >= 80) return position === trailPosition - 80;
+        return position === trailPosition;
+    }
+
+    const shouldShowAsCurrent = (position: number) => {
+        if (position === currentPosition.current) return true;
+        if (checkTrail(position, currentPosition.current + 1)) return true;
+        if (checkTrail(position, currentPosition.current + 2)) return true;
+        if (checkTrail(position, currentPosition.current + 3)) return true;
+        return false;
+    }
 
     useHackMoveListener(currentPosition.current, (newPos) => currentPosition.current = newPos, check);
 
@@ -139,7 +139,7 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
                 {codes.current.map((code, i) => {
                     const classname = classNames({
                         'correct': showCorrect && toFind.some((tf) => tf === i + codesPosition.current),
-                        'current': i === currentPosition.current
+                        'current': shouldShowAsCurrent(i),
                     })
                     return (<div className={classname} key={code + i}>{code}</div>);
                 })

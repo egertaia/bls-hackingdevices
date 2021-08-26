@@ -32,9 +32,10 @@ RegisterNetEvent('bls-hackingdevices:start-hacking', function(hackType, gameType
 end)
 
 
+-- returns a boolean, whether hack was successful or not
 RegisterNUICallback('close-frame', function(data, cb)
   toggleNuiFrame(false)
-  debugPrint('Hide bls-hackingdevices frame', data.success, data.remainingTime)
-  hackingCallback(data.success, data.remainingTime)
+  debugPrint('Hide bls-hackingdevices frame', data)
+  hackingCallback(data)
   cb({})
 end)

@@ -36,7 +36,6 @@ const App: React.FC = () => {
 
   useNuiEvent<SetVisibleProps>('setVisible', (data) => {
     // This is our handler for the setVisible action.
-    console.log(data);
     setIsVisible(data.show);
     if (data.show) {
       setHackType(data.hackType);

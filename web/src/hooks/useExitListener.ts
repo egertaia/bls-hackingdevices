@@ -18,7 +18,7 @@ export const useExitListener = (visibleSetter: FrameVisibleSetter) => {
     const keyHandler = (e: KeyboardEvent) => {
       if (LISTENED_KEYS.includes(e.code)) {
         setterRef.current(false)
-        fetchNui('close-frame')
+        fetchNui('close-frame', false)
       }
     }
 
