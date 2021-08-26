@@ -33,11 +33,11 @@
     font-size: 18px;
 }
 
-.codes>div.red {
+.codes>div.current {
     color: red;
 }
 
-.codes>div.green {
+.codes>div.correct {
     color: green;
 }
 

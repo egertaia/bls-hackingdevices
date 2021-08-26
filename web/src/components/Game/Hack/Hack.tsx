@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { GameType, HackType } from '../../../typings/gameOptions';
 import './Hack.css';
 import { getRandomSetChar, randomNumber, sleep } from '../../../utils/random';
+import { useHackMoveListener } from './useHackMoveListener';
 
 type HackProps = {
     hackType: HackType,
@@ -16,9 +17,10 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
     let timerTime: any;
     const timerFinish: any = useRef();
     const [correctPosition] = useState<number>(randomNumber(0, 80));
-    const [codes, setCodes] = useState<Array<string>>([]);
-    const [codesPosition, setCodesPosition] = useState<number>(0);
-    const [currentPosition, setCurrentPosition] = useState<number>(43);
+    const codes = useRef<any[]>([]);
+    const [showCorrect, setShowCorrect] = useState(false);
+    const codesPosition = useRef<number>(0);
+    const currentPosition = useRef<number>(43);
     const [timerValue, setTimerValue] = useState<string>('');
 
     const getGroupFromPosition = (position: number): Array<number> => {
@@ -34,19 +36,17 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
 
 
     const moveCodes = useCallback(() => {
-        console.log('cds', codes);
-        console.log('mc', 'codesPosition', codesPosition);
-        setCodesPosition((codesPosition + 1) % 80);
-        console.log('mc', 'codesPosition', codesPosition);
+        console.log('still');
+        let codesPos = (codesPosition.current + 1) % 80;
+        console.log('codesPOS', codesPos);
+        codesPosition.current = codesPos;
 
-        let temporaryCodes = [...codes];
-        for (let i = 0; i < codesPosition; i++) {
-            temporaryCodes.push(temporaryCodes[i]);
-        }
-        console.log(temporaryCodes);
-        setCodes(temporaryCodes.splice(0, codesPosition));
-        console.log('mc2', codes);
-    }, [codes, codesPosition]);
+        let temporaryCodes = [...codes.current];
+        temporaryCodes.push(temporaryCodes.shift());
+        codes.current = temporaryCodes;
+
+        console.log(codesPosition, 'cp', correctPosition, currentPosition);
+    }, [codesPosition, correctPosition, currentPosition]);
 
     const timer = () => {
         let msString;
@@ -64,14 +64,18 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
     const check = () => {
         stopTimer();
 
-        let currentAttempt = (currentPosition + codesPosition);
+        let currentAttempt = (currentPosition.current + codesPosition.current);
         currentAttempt %= 80;
+
+        console.log(currentAttempt, correctPosition, 'cc');
 
         if (currentAttempt === correctPosition) {
             console.log('you win');
         } else {
             console.log('aeg läbi, kaotus');
         }
+
+        setShowCorrect(true);
 
         resetGame();
     }
@@ -107,34 +111,39 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
         for (let i = 0; i < 80; i++) {
             tempCodes.push(getRandomSetChar(hackType) + getRandomSetChar(hackType));
         }
-        console.log(tempCodes);
-        setCodes(tempCodes);
+        codes.current = tempCodes;
     }
 
 
     useEffect(() => {
         console.log('hi');
         generateCodes();
-        timerGame.current = setInterval(moveCodes, 10000);
+        timerGame.current = setInterval(moveCodes, 1500);
         startTimer();
         timerFinish.current = sleep(duration * 1000, () => {
-            console.log('end-game');
             check();
         });
 
-        console.log(toFind, correctPosition);
-
     }, []);
+
+    useHackMoveListener(currentPosition.current, (newPos) => currentPosition.current = newPos, check);
 
 
     return (
         <div className={hackClassName}>
             <div className='find'>
-                {toFind.map((toFind) => (<div key={toFind}>{codes[toFind]}</div>))}
+                {toFind.map((toFind) => (<div key={toFind}>{codes.current[toFind - codesPosition.current]}</div>))}
             </div>
             <div className='timer'>{timerValue}</div>
             <div className='codes'>
-                {codes.map((code, i) => (<div className={`${toFind.some(tf => tf === i) ? 'correct' : 'false'}`} key={code + i}>{code}</div>))}
+                {codes.current.map((code, i) => {
+                    const classname = classNames({
+                        'correct': showCorrect && toFind.some((tf) => tf === i + codesPosition.current),
+                        'current': i === currentPosition.current
+                    })
+                    return (<div className={classname} key={code + i}>{code}</div>);
+                })
+                }
             </div>
         </div>
     );
