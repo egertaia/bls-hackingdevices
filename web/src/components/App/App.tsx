@@ -13,8 +13,8 @@ debugData([
     action: 'setVisible',
     data: {
       show: true,
-      hackType: HackType.NUMERIC,
-      gameType: GameType.NORMAL,
+      hackType: "NUMERIC",
+      gameType: "NORMAL",
       duration: 20
     },
   }
@@ -22,8 +22,8 @@ debugData([
 
 type SetVisibleProps = {
   show: boolean,
-  hackType: HackType,
-  gameType: GameType,
+  hackType: string,
+  gameType: string,
   duration: number
 }
 
@@ -38,11 +38,10 @@ const App: React.FC = () => {
     // This is our handler for the setVisible action.
     setIsVisible(data.show);
     if (data.show) {
-      setHackType(data.hackType);
-      setGameType(data.gameType);
+      setHackType(data.hackType as HackType);
+      setGameType(data.gameType as GameType);
       setDuration(data.duration);
     }
-
   });
 
   useExitListener(setIsVisible);

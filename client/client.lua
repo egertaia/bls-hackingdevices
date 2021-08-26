@@ -37,18 +37,17 @@ end)
 RegisterNUICallback("close-frame", function(data, cb)
   toggleNuiFrame(false)
   debugPrint("Hide bls-hackingdevices frame", data)
-  hackingCallback(data)
+  print(data)
   cb({})
 end)
 
 
---testing func
-
-local function testCallback(data)
-  print("hehee")
+local function testingCallback(data)
   print(data)
 end
 
+--testing func
 RegisterCommand("testHack", function (source, args)
-  TriggerEvent("bls-hackingdevices:start-hacking", args[0], args[1], args[2], testCallback)
+  print(args[1], args[2], args[3])
+  TriggerEvent("bls-hackingdevices:start-hacking", args[1], args[2], args[3], testingCallback)
 end)
