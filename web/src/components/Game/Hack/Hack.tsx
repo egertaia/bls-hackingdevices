@@ -132,14 +132,21 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
     return (
         <div className={hackClassName}>
             <div className='find'>
-                {toFind.map((toFind) => (<div key={toFind}>{codes.current[toFind - codesPosition.current]}</div>))}
+                {toFind.map((toFind) => {
+                    let positionToCheck = toFind - codesPosition.current;
+                    if (positionToCheck < 0) positionToCheck += 80;
+
+                    return (<div key={toFind}>{codes.current[positionToCheck]}</div>);
+                })}
             </div>
             <div className='timer'>{timerValue}</div>
             <div className='codes'>
                 {codes.current.map((code, i) => {
+                    let codesCorrect = i + codesPosition.current;
+                    if (codesCorrect >= 80) codesCorrect -= 80;
                     const classname = classNames({
-                        'correct': showCorrect && toFind.some((tf) => tf === i + codesPosition.current),
                         'current': shouldShowAsCurrent(i),
+                        'correct': showCorrect && toFind.some((tf) => tf === codesCorrect),
                     })
                     return (<div className={classname} key={code + i}>{code}</div>);
                 })

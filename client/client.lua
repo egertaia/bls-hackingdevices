@@ -42,11 +42,12 @@ RegisterNUICallback("close-frame", function(data, cb)
 end)
 
 
+--testing func
+
 local function testingCallback(data)
   print(data)
 end
 
---testing func
 RegisterCommand("testHack", function (source, args)
   print(args[1], args[2], args[3])
   TriggerEvent("bls-hackingdevices:start-hacking", args[1], args[2], args[3], testingCallback)
