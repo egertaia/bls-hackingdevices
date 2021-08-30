@@ -18,6 +18,7 @@ end
 -- GREEK = 'greek',
 -- BRAILLE = 'braille',
 -- RUNES = 'runes',
+-- RANDOM = 'random'
 
 -- GAMETYPE
 -- RANDOM = 'random',

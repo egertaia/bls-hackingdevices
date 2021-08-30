@@ -1,16 +1,17 @@
 export enum HackType {
-    NUMERIC = 'numeric',
-    ALPHABET = 'aplhabet',
-    ALPHANUMERIC = 'alphanumeric',
-    GREEK = 'greek',
-    BRAILLE = 'braille',
-    RUNES = 'runes',
+    NUMERIC = 'NUMERIC',
+    ALPHABET = 'ALPHABET',
+    ALPHANUMERIC = 'ALPHANUMERIC',
+    GREEK = 'GREEK',
+    BRAILLE = 'BRAILLE',
+    RUNES = 'RUNES',
+    RANDOM = 'RANDOM',
 }
 
 export enum GameType {
-    RANDOM = 'random',
-    NORMAL = 'normal',
-    MIRRORED = 'mirrored'
+    RANDOM = 'RANDOM',
+    NORMAL = 'NORMAL',
+    MIRRORED = 'MIRRORED'
 }
 
 export enum SplashText {

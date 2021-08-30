@@ -13,7 +13,7 @@ debugData([
     action: 'setVisible',
     data: {
       show: true,
-      hackType: "NUMERIC",
+      hackType: "RANDOM",
       gameType: "NORMAL",
       duration: 20
     },
@@ -38,7 +38,13 @@ const App: React.FC = () => {
     // This is our handler for the setVisible action.
     setIsVisible(data.show);
     if (data.show) {
-      setHackType(data.hackType as HackType);
+      let selectedHackType = data.hackType as HackType;
+      if (selectedHackType === HackType.RANDOM) {
+        const enumValues = Object.keys(HackType);
+        const enumKey = enumValues[Math.floor(Math.random() * (enumValues.length - 1))];
+        selectedHackType = (enumKey as HackType);
+      }
+      setHackType(selectedHackType);
       setGameType(data.gameType as GameType);
       setDuration(data.duration);
     }

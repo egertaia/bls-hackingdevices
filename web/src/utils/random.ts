@@ -13,10 +13,10 @@ export const getRandomSetChar = (hackType: HackType): string => {
             characterString = "0123456789";
             break;
         case HackType.ALPHABET:
-            characterString = "ABCDEFGHIJKLMNOPQRSTUVWXYZÕÄÖÜ";
+            characterString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             break;
         case HackType.ALPHANUMERIC:
-            characterString = "ABCDEFGHIJKLMNOPQRSTUVWXYZÕÄÖÜ0123456789";
+            characterString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             break;
         case HackType.GREEK:
             characterString = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
