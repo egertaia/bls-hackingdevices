@@ -2,7 +2,7 @@ fx_version "cerulean"
 
 description "Basic Hacking device minigame"
 author "egertaia"
-version '0.0.1'
+version '1.0.0'
 repository 'https://github.com/egertaia/bls-hackingdevices'
 
 lua54 'yes'
