@@ -13,9 +13,9 @@ debugData([
     action: 'setVisible',
     data: {
       show: true,
-      hackType: "RANDOM",
-      gameType: "RANDOM",
-      duration: 20
+      hackType: "NUMERIC",
+      gameType: "NORMAL",
+      duration: 100
     },
   }
 ]);

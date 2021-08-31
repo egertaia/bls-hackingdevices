@@ -17,10 +17,10 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
     const timerGame: any = useRef();
     const timerTime = useRef<any>();
     const timerFinish: any = useRef();
-    const [correctPosition] = useState<number>(randomNumber(0, 80));
+    const [correctPosition] = useState<number>(randomNumber(0, 79));
     const codes = useRef<any[]>([]);
     const [showCorrect, setShowCorrect] = useState(false);
-    const codesPosition = useRef<number>(0);
+    const codesPosition = useRef<number>(1);
     const currentPosition = useRef<number>(43);
     const [timerValue, setTimerValue] = useState<string>('');
 
@@ -135,6 +135,7 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
                 {toFind.map((toFind) => {
                     let positionToCheck = toFind - codesPosition.current;
                     if (positionToCheck < 0) positionToCheck += 80;
+                    if (positionToCheck >= 80) positionToCheck -= 80;
 
                     return (<div key={toFind}>{codes.current[positionToCheck]}</div>);
                 })}
