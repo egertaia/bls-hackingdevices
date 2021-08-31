@@ -1,3 +1,4 @@
+// random has to be last.
 export enum HackType {
     NUMERIC = 'NUMERIC',
     ALPHABET = 'ALPHABET',
@@ -8,10 +9,11 @@ export enum HackType {
     RANDOM = 'RANDOM',
 }
 
+// random has to be last.
 export enum GameType {
-    RANDOM = 'RANDOM',
     NORMAL = 'NORMAL',
-    MIRRORED = 'MIRRORED'
+    MIRRORED = 'MIRRORED',
+    RANDOM = 'RANDOM',
 }
 
 export enum SplashText {

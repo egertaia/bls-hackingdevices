@@ -86,7 +86,7 @@ const Hack: React.FC<HackProps> = ({ hackType, gameType, duration }) => {
 
     const hackClassName = classNames({
         'hack': true,
-        'mirrored': gameType === GameType.MIRRORED || (Math.round(Math.random()) === 1 && gameType === GameType.RANDOM)
+        'mirrored': gameType === GameType.MIRRORED
     });
 
     function generateCodes() {

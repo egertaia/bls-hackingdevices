@@ -14,7 +14,7 @@ debugData([
     data: {
       show: true,
       hackType: "RANDOM",
-      gameType: "NORMAL",
+      gameType: "RANDOM",
       duration: 20
     },
   }
@@ -39,13 +39,19 @@ const App: React.FC = () => {
     setIsVisible(data.show);
     if (data.show) {
       let selectedHackType = data.hackType as HackType;
+      let selectedGameType = data.gameType as GameType;
       if (selectedHackType === HackType.RANDOM) {
         const enumValues = Object.keys(HackType);
         const enumKey = enumValues[Math.floor(Math.random() * (enumValues.length - 1))];
         selectedHackType = (enumKey as HackType);
       }
+      if (selectedGameType === GameType.RANDOM) {
+        const enumValues = Object.keys(GameType);
+        const enumKey = enumValues[Math.floor(Math.random() * (enumValues.length - 1))];
+        selectedGameType = (enumKey as GameType);
+      }
       setHackType(selectedHackType);
-      setGameType(data.gameType as GameType);
+      setGameType(selectedGameType);
       setDuration(data.duration);
     }
   });
