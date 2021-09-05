@@ -27,7 +27,7 @@ end
 
 
 
-RegisterNetEvent("bls-hackingdevices:start-hacking", function(hackType, gameType, duration, callback)
+RegisterNetEvent("wrp-hackingdevices:start-hacking", function(hackType, gameType, duration, callback)
   hackingCallback = callback;
   toggleNuiFrame(true, hackType, gameType, duration)
   debugPrint("Show NUI frame", hackType, gameType, duration)
@@ -37,7 +37,7 @@ end)
 -- returns a boolean, whether hack was successful or not
 RegisterNUICallback("close-frame", function(data, cb)
   toggleNuiFrame(false)
-  debugPrint("Hide bls-hackingdevices frame", data)
+  debugPrint("Hide hackingdevices frame", data)
   hackingCallback(data)
   cb({})
 end)
