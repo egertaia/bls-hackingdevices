@@ -11,6 +11,7 @@ export const useHackMoveListener = (position: number, positionSetter: PositionSe
     const setterRef = useRef<PositionSetter>(noop);
     const valueRef = useRef<ValueChecker>(noop);
     const positionRef = useRef<number>(0);
+    const isPositionFinal = useRef<boolean>(false);
 
     useEffect(() => {
         setterRef.current = positionSetter
@@ -54,7 +55,10 @@ export const useHackMoveListener = (position: number, positionSetter: PositionSe
                         setterRef.current(positionRef.current);
                         break;
                     case "Enter":
-                        valueRef.current();
+                        if (!isPositionFinal.current) {
+                            valueRef.current();
+                        }
+                        isPositionFinal.current = true;
                         break;
                     default: break;
                 }
